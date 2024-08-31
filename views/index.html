@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.svg" />
+    <meta name="application-name" content="Calmo Api Clima" />
+    <meta name="description" content=<%= description %> >
+    <meta name="author" content="Óscar Hernández">
+    <meta name="keywords" content="api, node, openweather">
+    <meta name="robots" content="no-index, no-follow" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" >
+    <link rel="stylesheet" href="/css/main.css" >
+    <title><%= title %></title>
+</head>
+<body>
+    <header class="flex flex-between flex-column">
+        <h1 class="title-app center"><%= heading %></h1>
+        <span class="center description-app"><%= description %></span>
+    </header>
+    <main id="container-app" class="flex flex-column flex-center">
+        <header class="header-form flex flex-center">
+            <picture style="width:100px" class="flex flex-center">
+                <source srcset="/favicon.svg" width="75" height="75" alt="Icono de Calamo API Clima. Nube Azul" media="(min-width:800px)"/>
+                <img src="/favicon.svg" width="75" height="75" alt="Icono de Calamo API Clima. Nube Azul">
+            </picture>
+        </header>
+        <article>
+            <form id="form-api" class="flex flex-center flex-column w-full" >
+                <input id="city-search" class="w-full flex flex-center" type="search" name="city" placeholder="Escribe el nombre de la ciudad" />
+                <button class="button">Buscar</button>
+            </form>
+            <aside class="data-weather">
+                <h2 id="heading-weather-data" class="center"></h2>
+                <picture id="container-icon-data" class="flex flex-center">
+                    <img class="hidden" width="50" height="50" />
+                </picture>
+            </aside>
+        </article>
+        <footer class="flex flex-center w-full">
+            <span class="w-full center">
+                <a href="https://openweathermap.org/api"
+                    rel="noreferer noopener"
+                    aria-label="Link a la web de OpenWeather"
+                    target="_blank"
+                >
+                    Información obtenida de &copy;Openweather</a>
+            </span>
+        </footer>
+    </main>
+    <footer id="site-footer" aria-label="App Footer" class="flex flex-center w-full">
+        <span class="center">&copy<%= year %> <% company %></span>
+    </footer>
+</body>
+<script defer type="module" src="/js/main.js"></script>
+
+</html>
