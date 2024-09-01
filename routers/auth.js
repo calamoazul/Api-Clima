@@ -12,48 +12,48 @@ import express from 'express';
 import authController from '../controllers/AuthController.js';
 import useConfig from '../config.js';
 import jwt from 'jsonwebtoken';
-import DateService from '../Services/DateService.js';
+import { renderIndex, renderLogin } from './params/auth.js';
 const router = express.Router();
 
-const {year} = DateService()
+
 const {secret_key} = useConfig();
 
 router.get('/', (req, res) => {
     try {
-        res.render('index', {
-            title: 'Api Clima',
-            heading: 'Api Clima',
-            description: 'Escribe el nombre de la ciudad para descubrir el tiempo de hoy',
-            year: year(),
-            company: 'Cálamo Azul'
-        } )
+        res.render('index', renderIndex )
     }
     catch(error){
         console.error(error);
     }
 })
 
+
+router.get('/login', (req, res) => {
+    try {
+        res.render('login', renderLogin)
+    }
+    catch(error){
+        res.status(500)
+    }
+})
+
 router.post('/login', async (req, res) => {
-        //Comprobamos credenciales
-        const {userName, email, password} = await req?.body.json()
+   
+        const {userName, email, password} = await req.body.json()
         const credentials = {userName, email, password};
         authController.login(credentials, ((login) => {
-            //Si son validas, generamos token y lo devolvenos.
+        
             const token = jwt.sign({user:userName}, secret_key, {expiresIn: 60 *60});
+            res.cookie('Bearer:', token)
             console.log('token', token);
-            return res.status(200).json({token: token});
+            return res.status(200).json({message: "Credenciales Correctas", token: token});
         }, err => {
-            return res.status(401).json({message: 'Invalidad credentials'});
+            return res.status(401).json({message: 'Credenciales Incorrectas'});
         }))
-       
-
-
-        // Si no, generamos error
-        res.send('Login Route')
     })
 
 router.post('/register', async (req, res) => {
-    const {userName, email, password} = await req?.body.json()
+    const {userName, email, password} = await req?.body
     const dataUser = {userName, email, password};
     authController.registerUser(dataUser, (result => {
         const user = result.resolve();
