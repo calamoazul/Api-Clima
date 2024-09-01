@@ -9,7 +9,7 @@ class WeatherService {
     }
 
     async getWeather(lon, lat){
-        const response = await this.http.get({
+        const response = await this.http.get('' ,{
             params: {
                 lat: lat,
                 lon: lon
