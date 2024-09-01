@@ -1,6 +1,9 @@
 'use strict'
 
 import httpWeather from "../Services/WeatherService.js";
+import DateService from "../Services/DateService.js";
+
+const {formatFullDate, formatHourDate} = DateService()
 
 class WeatherService {
 
@@ -18,7 +21,20 @@ class WeatherService {
        
         const dataWeather = await response.data
         const {current} = dataWeather
-        return current
+        return {
+            description: current.weather[0].description,
+            localDate: formatFullDate(current.dt),
+            sunrise: formatHourDate(current.sunrise),
+            sunset: formatHourDate(current.sunset),
+            temp: current.temp+'&#8451;',
+            feels_like: current.feels_like+'&#8451;',
+            pressure: current.pressure,
+            wind_speed: current.wind_speed,
+            wind_deg: current.wind_deg,
+            humidity: current.humidity,
+            dew_point: current.dew_point+'&#8451;',
+            clouds: current.clouds
+        }
     }
 
 }

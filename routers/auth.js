@@ -12,9 +12,10 @@ import express from 'express';
 import authController from '../controllers/AuthController.js';
 import useConfig from '../config.js';
 import jwt from 'jsonwebtoken';
-import {year} from '../Services/DateService.js';
+import DateService from '../Services/DateService.js';
 const router = express.Router();
 
+const {year} = DateService()
 const {secret_key} = useConfig();
 
 router.get('/', (req, res) => {
@@ -39,7 +40,7 @@ router.post('/login', async (req, res) => {
         authController.login(credentials, ((login) => {
             //Si son validas, generamos token y lo devolvenos.
             const token = jwt.sign({user:userName}, secret_key, {expiresIn: 60 *60});
-            console.log(token);
+            console.log('token', token);
             return res.status(200).json({token: token});
         }, err => {
             return res.status(401).json({message: 'Invalidad credentials'});
