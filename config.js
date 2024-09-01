@@ -11,6 +11,12 @@ const config = () => {
   const api_password = process.env.API_PASSWORD;
   const db_name = process.env.DB_NAME;
   const table_users = process.env.TABLE_USERS;
+  const params = {
+    action: 'query',
+    prop: 'coordinates|pageimages|description',
+    format: 'json',
+    origin: '*'
+};
   return {
     api_wiki,
     port,
@@ -21,7 +27,8 @@ const config = () => {
     api_user,
     api_password,
     db_name,
-    table_users
+    table_users,
+    params
   }
 }
 

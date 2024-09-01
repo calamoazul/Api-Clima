@@ -1,6 +1,6 @@
 'use strict'
 
-import config from '../config.js'
+
 
 
 import httpGeocoding from '../Services/GeocodingService.js';
@@ -33,9 +33,9 @@ class GeocodingController {
        
        
        try {
-        const response = await this.http.get({
+        const response = await this.http.get('',{
             params: {
-                city: city
+                titles: city
             }
         });
         const search = response.data

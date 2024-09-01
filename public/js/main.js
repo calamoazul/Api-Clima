@@ -12,7 +12,7 @@ let headingCreated = false;
 formSearch.addEventListener('submit', async (evt) => {
     evt.preventDefault()
     try {
-        const cityUrl = '/' + encodeURIComponent(citySearch.value)
+        const cityUrl = '/city/' + encodeURIComponent(citySearch.value)
         const cityResponse = await fetch(cityUrl)
         const cityData = await cityResponse.json()
        // const headingSearch = document.querySelector('.heading-city')
@@ -65,20 +65,4 @@ const renderDescription = ({description, lat, long}) => {
     
     
 
-}
-const renderPoke = (pokemon) => {
-   
-   
-    const sprite = pokemon.sprites?.front_default;
-    console.log('render', pokemon, 'sprite', sprite, 'container', containerIcon)
-   
-
-    const namePoke = pokemon?.name
-    containerIcon.classList.add('icon')
-    containerIcon.alt = namePoke
-    containerIcon.src = sprite;
-    containerIcon.width = 50
-    containerIcon.height = 50
-    containerIcon.classList.remove('hidden');
-    
 }

@@ -1,3 +1,4 @@
+"use strict"
 /**
  * @author Óscar Hernández
  * @copyright 2024
@@ -7,7 +8,7 @@
 
 import axios from 'axios';
 import useConfig from '../config.js';
-
+import Qs from 'qs';
 const {api_wiki} = useConfig();
 
 const httpGeocoding = axios.create({
@@ -15,9 +16,9 @@ const httpGeocoding = axios.create({
     method: 'get',
     headers: {
         "Accept": 'application/json',
-        "Content-Type": "application/x-www-form-urlencoded"
+        'content-type': 'application/x-www-form-urlencoded'
     },
-    withCredentials: true,
+    withCredentials: false,
     withXSRFToken: true,
     responseType: 'json',
     responseEncoding: 'utf8',
@@ -27,22 +28,16 @@ const httpGeocoding = axios.create({
         format: 'json',
         origin: '*'
     },
+    paramsSerializer: function (params) {
+        return Qs.stringify(params, {arrayFormat: 'brackets'})
+      },
     timeout: 3000,
     validateStatus: (status) => {
         return status >= 200 < 300;
     }
 })
 
-httpGeocoding.interceptors.request.use((config) => {
 
-    const token = localStorage.getItem('Bearer')
-    if(token){
-        config.headers.Authorization = 'Bearer:' + Json.parse(token);
-    }
-    return config;
-}, err => {
-    return Promise.reject(err)
-})
 
 
 export default httpGeocoding;
