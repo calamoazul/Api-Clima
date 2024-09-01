@@ -91,10 +91,8 @@ class DataBaseManager {
   createUser = async ({ userName, password, email }) => {
     const db = await this.connect();
     const hash = await hashPassword(password);
-    console.log(hash);
     const userId = uuid4();
     const passwordHash = hash;
-    console.log(passwordHash);
     const sql = /*SQL*/ `INSERT INTO ${table_users} (id, userName, email, password) VALUES(?, ?, ?, ?)`;
     const stmt = await db.prepare(sql);
     const values = {
