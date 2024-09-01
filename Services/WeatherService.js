@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * @author Óscar Hernández
  * @copyright 2024
@@ -6,7 +8,7 @@
  */
 import useConfig from '../config.js';
 import axios from 'axios';
-
+import Qs from 'qs';
 
 /**
  * Dirección de la api de OpenWeather y api_key
@@ -14,6 +16,7 @@ import axios from 'axios';
  */
 const {api_weather, api_key} = useConfig();
 
+const dt = Math.floor(Date.now() / 1000);
 /**
  * Petición personalizada para la api de OpenWeather
  * @returns AxiosInstance
@@ -28,27 +31,22 @@ const httpWeather = axios.create({
         "Content-Type": "application/x-www-form-urlencoded"
     },
     withXSRFToken: true,
-    withCredentials: true,
+    withCredentials: false,
     responseEncoding: 'utf8',
+    responseType: 'json',
     params: {
-        exclude: "hourly,daily,minutely",
-        unit: 'metric',
+        exclude: "minutely",
+        units: 'metric',
         lang: 'es',
+        dt: dt,
         appid: api_key
-    }
+    },
+    paramsSerializer: function (params) {
+        return Qs.stringify(params, {arrayFormat: 'brackets'})
+    },
 });
 
-httpWeather.interceptors.request.use((config) => {
-    const token = localStorage.getItem('Bearer');
-    if(token){
-        const dt = Date.now() / 1000;
-        config.params['dt'] = dt;
-        config.headers.Authorization = 'Bearer' + JSON.parse(token)
-    }
-    return config;
-}, err => {
-    return Promise.reject(err);
-})
+
 
 
 export default httpWeather;
