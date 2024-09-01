@@ -11,9 +11,7 @@ router.get('/:city', async (req, res) => {
     try { 
         const response = await cityController.getDataCity(city);
         return res.send(response)
-       
     }
-
     catch(error){
         console.error(error)
     }
