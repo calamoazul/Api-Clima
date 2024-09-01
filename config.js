@@ -11,6 +11,8 @@ const config = () => {
   const api_password = process.env.API_PASSWORD;
   const db_name = process.env.DB_NAME;
   const table_users = process.env.TABLE_USERS;
+  const title_api = process.env.API_TITLE
+  const company_api = process.env.API_COMPANY
   const params = {
     action: 'query',
     prop: 'coordinates|pageimages|description',
@@ -28,7 +30,9 @@ const config = () => {
     api_password,
     db_name,
     table_users,
-    params
+    params,
+    title_api,
+    company_api
   }
 }
 
